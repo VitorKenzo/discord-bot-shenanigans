@@ -7,6 +7,8 @@ const { token } = require('./config.json');
 // create new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds]});
 
+
+client.cooldowns = new Collection();
 // COMMAND HANDLER PORTION
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
