@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 
 module.exports = {
     category: 'moderation',
@@ -6,20 +6,22 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('ban')
         .setDescription('Ban a given person from the server')
-        .addStringOption(option =>
-            option.setName('person')
-                .setDescription('Person to be banned')
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('User to be banned')
                 .setRequired(true))
         .addStringOption(option =>
             option.setName('reason')
                 .setDescription('Reasons for the ban')
-                .setRequired(true)),
+                .setRequired(true))
+        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers | PermissionFlagsBits.KickMembers)
+        .setDMPermission(false),
     async execute(interaction) {
         
-        const person = interaction.options.getString('person');
+        const user = interaction.options.getUser('person');
         const reason = interaction.options.getString('reason');
 
-        console.log(person);
+        console.log(user);
         console.log(reason);
 
         interaction.reply('Banning...');
