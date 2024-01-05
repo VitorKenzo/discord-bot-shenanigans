@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 // requiring the necessary discord.js classes
-const {Client, Events, GatewayIntentBits, Collection} = require('discord.js');
+const {Client, Events, GatewayIntentBits, Collection, EmbedBuilder} = require('discord.js');
 const { token } = require('./config.json');
 
 // create new client instance
@@ -46,5 +46,32 @@ for (const file of eventFiles) {
     }
 }
 
+// Slash command logging
+client.on(Events.InteractionCreate, async interaction => {
+    
+    if (!interaction) {
+        return;
+    }
+
+    if(!interaction.isChatInputCommand()) {
+        return;
+    }
+
+    const channel = await client.channels.cache.get('1192585084159672401');
+    const server = interaction.guild.name;
+    const user = interaction.user.username;
+    const userID = interaction.user.id;
+
+    const embed = new EmbedBuilder()
+        .setColor('Grey')
+        .setTitle('Slash Command was used!')
+        .addFields({ name: 'Server Name', value: `${server}`})
+        .addFields({ name: 'Chat Command', value: `${interaction}`})
+        .addFields({ name: 'Command User', value: `${user} / ${userID}`})
+        .setTimestamp()
+        .setFooter({ text: 'Chat Command Executed' })
+    
+    await channel.send({ embeds: [embed] });
+})
 
 client.login(token);
