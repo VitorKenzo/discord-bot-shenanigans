@@ -22,7 +22,7 @@ module.exports = {
      */
     async execute(interaction) {
         
-        const user = interaction.options.getUser('person');
+        const user = interaction.options.getUser('user');
         const reason = interaction.options.getString('reason');
 
         await interaction.deferReply();
