@@ -5,7 +5,7 @@ const {Client, Events, GatewayIntentBits, Collection, EmbedBuilder} = require('d
 const { token, logChannelId } = require('./config.json');
 
 // create new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds]});
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 
 client.cooldowns = new Collection();
@@ -46,39 +46,5 @@ for (const file of eventFiles) {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
-
-// Slash command logging
-client.on(Events.InteractionCreate, async interaction => {
-    
-    // seeing it is an interaction
-    if (!interaction) {
-        return;
-    }
-
-    // needs to be an input command
-    if(!interaction.isChatInputCommand()) {
-        return;
-    }
-
-    // the channel in question here is the command-log of my server
-    const channel = await client.channels.cache.get(logChannelId);
-
-    // data of the slash command
-    const server = interaction.guild.name;
-    const user = interaction.user.username;
-    const userID = interaction.user.id;
-
-    // message in the log
-    const embed = new EmbedBuilder()
-        .setColor('Red')
-        .setTitle('Slash Command was used!')
-        .addFields({ name: 'Server Name', value: `${server}`})
-        .addFields({ name: 'Chat Command', value: `${interaction}`})
-        .addFields({ name: 'Command User', value: `${user} / ${userID}`})
-        .setTimestamp()
-        .setFooter({ text: 'Chat Command Executed' })
-    
-    await channel.send({ embeds: [embed] });
-})
 
 client.login(token);

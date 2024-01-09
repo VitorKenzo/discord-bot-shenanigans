@@ -32,23 +32,20 @@ module.exports = {
         const user = interaction.options.getUser('user');
         const role = interaction.options.getRole('role');
         const duration = interaction.options.getString('duration');
-        
-        // beggining the reply
-        await interaction.deferReply();
 
         // fetching the user being targeted
         const target = await interaction.guild.members.fetch(user);
 
         // target might have left the server considering the discord cache
         if(!target) {
-            await interaction.editReply('The user does not exist in the server');
+            await interaction.reply({ content:'The user does not exist in the server', ephemeral:true });
             return;
         }
 
         // making sure the duration of the timeout is valid
         const msDuration = ms(duration);
         if (isNaN(msDuration)) {
-            await interaction.editReply('Provide a valid timeout duration');
+            await interaction.reply({ content:'Provide a valid time duration', ephemeral:true });
             return;
         }
 
@@ -60,13 +57,13 @@ module.exports = {
 
             // checking if the user already has the role
             if(target.roles.cache.some(r => r.name === role.name)){
-                interaction.editReply(`User ${target} already has the role ${role}`);
+                interaction.reply({ content:`User ${target} already has the role ${role}`, ephemeral:true });
                 return;
             }
 
             // adding the role
             target.roles.add(role);
-            interaction.editReply(`${target} is ${role} for ${prettyMS(msDuration)}`);
+            interaction.reply({ content:`${target} is ${role} for ${prettyMS(msDuration)}`, ephemeral:true });
 
             // creating the timeout that will remove the role
             setTimeout(async () => {

@@ -1,4 +1,5 @@
-const { Events, Collection } = require('discord.js');
+const { Events, Collection, EmbedBuilder } = require('discord.js');
+const { logChannelId } = require('../config.json');
 
 module.exports = {
     name: Events.InteractionCreate,
@@ -37,7 +38,30 @@ module.exports = {
             setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
             try { 
+                // execution of the command
                 await command.execute(interaction);
+
+                // SLASH COMMAND LOGGING
+                // the channel in question here is the command-log of my server
+                const channel = await interaction.client.channels.cache.get(logChannelId);
+
+                // data of the slash command
+                const server = interaction.guild.name;
+                const user = interaction.user.username;
+                const userID = interaction.user.roles.highest.position;
+
+                // message in the log
+                const embed = new EmbedBuilder()
+                    .setColor('Red')
+                    .setTitle('Slash Command was used!')
+                    .addFields({ name: 'Server Name', value: `${server}`})
+                    .addFields({ name: 'Chat Command', value: `${interaction}`})
+                    .addFields({ name: 'Command User', value: `${user} / ${userID}`})
+                    .setTimestamp()
+                    .setFooter({ text: 'Chat Command Executed' })
+                
+                await channel.send({ embeds: [embed] });
+
             } catch (error) {
                 console.error(error);
                 if (interaction.replied || interaction.deferred) {

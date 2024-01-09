@@ -1,4 +1,4 @@
-const { Client, Interaction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
+const { Interaction, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 // to be able to get the string time sent and transform it in miliseconds
 const ms = require('ms');
 
@@ -33,34 +33,31 @@ module.exports = {
         const reason = interaction.options.getString('reason') || 'No reason provided';
         const duration = interaction.options.getString('duration');
 
-        // beggining the reply
-        await interaction.deferReply();
-
         // fetching the user being targeted
         const target = await interaction.guild.members.fetch(user);
 
         // target might have left the server considering the discord cache
         if(!target) {
-            await interaction.editReply('The user does not exist in the server');
+            await interaction.reply({ content:'The user does not exist in the server', ephemeral:true });
             return;
         }
 
         // case of trying to timeout a bot
         if(target.user.bot) {
-            await interaction.editReply('It is not possible to timeout bots');
+            await interaction.reply({ content:'It is not possible to timeout bots', ephemeral:true });
             return;
         }
 
         // making sure the duration of the timeout is valid
         const msDuration = ms(duration);
         if (isNaN(msDuration)) {
-            await interaction.editReply('Provide a valid timeout duration');
+            await interaction.reply({ content:'Provide a valid timeout duration', ephemeral:true });
             return;
         }
 
         // making sure the duration is inside pre defined range
         if (msDuration < 5000 || msDuration > 2.419e+9) {
-            await interaction.editReply('Duration cannot be less than 5 seconds or more than 28 days');
+            await interaction.reply({ content:'Duration cannot be less than 5 seconds or more than 28 days', ephemeral:true });
             return;
         }
 
@@ -71,13 +68,13 @@ module.exports = {
         const botRole = interaction.guild.members.me.roles.highest.position;
 
         if(targetUserRole > requestUserRole) {
-            await interaction.editReply('Cannot timeout user because they have a higher role than you');
+            await interaction.reply({ content:'Cannot timeout user because they have a higher role than you', ephemeral:true });
             return;
         }
 
         // if the has a high enough role, such as owner, he will not be timeout ever
         if(targetUserRole > botRole) {
-            await interaction.editReply('Cannot timeout user because they have a higher role than me (bot)');
+            await interaction.reply({ content:'Cannot timeout user because they have a higher role than me (bot)', ephemeral:true });
             return;
         }
 
@@ -90,13 +87,13 @@ module.exports = {
             // If the user is already timed out, we will update the timeout
             if(target.isCommunicationDisabled()) {
                 await target.timeout(msDuration, reason);
-                await interaction.editReply(`${target}'s timeout was updated to ${prettyMS(msDuration)}\nReason: ${reason}`);
+                await interaction.reply({ content:`${target}'s timeout was updated to ${prettyMS(msDuration)}\nReason: ${reason}`, ephemeral:true });
                 return;
             }
 
             // case the user was not in time out and will be timed out
             await target.timeout(msDuration, reason);
-            await interaction.editReply(`${target}'s was timed out for ${prettyMS(msDuration)}\nReason: ${reason}`);
+            await interaction.reply({ content:`${target}'s was timed out for ${prettyMS(msDuration)}\nReason: ${reason}`, ephemeral:true });
 
         } catch (error) {
             console.log(`There was an error when timing out: ${error}`);
