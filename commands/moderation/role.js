@@ -28,19 +28,24 @@ module.exports = {
      */
     async execute(interaction) {
         
+        // getting info necessary to see if we can execute the command
         const user = interaction.options.getUser('user');
         const role = interaction.options.getRole('role');
         const duration = interaction.options.getString('duration');
         
+        // beggining the reply
         await interaction.deferReply();
 
+        // fetching the user being targeted
         const target = await interaction.guild.members.fetch(user);
 
+        // target might have left the server considering the discord cache
         if(!target) {
             await interaction.editReply('The user does not exist in the server');
             return;
         }
 
+        // making sure the duration of the timeout is valid
         const msDuration = ms(duration);
         if (isNaN(msDuration)) {
             await interaction.editReply('Provide a valid timeout duration');
@@ -53,14 +58,17 @@ module.exports = {
             // just to reply with a pretty time
             const { default: prettyMS } = await import('pretty-ms');
 
+            // checking if the user already has the role
             if(target.roles.cache.some(r => r.name === role.name)){
                 interaction.editReply(`User ${target} already has the role ${role}`);
                 return;
             }
 
+            // adding the role
             target.roles.add(role);
             interaction.editReply(`${target} is ${role} for ${prettyMS(msDuration)}`);
 
+            // creating the timeout that will remove the role
             setTimeout(async () => {
                 await target.roles.remove(role);
             }, msDuration);

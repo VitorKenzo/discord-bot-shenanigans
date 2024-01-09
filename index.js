@@ -2,13 +2,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 // requiring the necessary discord.js classes
 const {Client, Events, GatewayIntentBits, Collection, EmbedBuilder} = require('discord.js');
-const { token } = require('./config.json');
+const { token, logChannelId } = require('./config.json');
 
 // create new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds]});
 
 
 client.cooldowns = new Collection();
+
 // COMMAND HANDLER PORTION
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
@@ -49,21 +50,27 @@ for (const file of eventFiles) {
 // Slash command logging
 client.on(Events.InteractionCreate, async interaction => {
     
+    // seeing it is an interaction
     if (!interaction) {
         return;
     }
 
+    // needs to be an input command
     if(!interaction.isChatInputCommand()) {
         return;
     }
 
-    const channel = await client.channels.cache.get('1192585084159672401');
+    // the channel in question here is the command-log of my server
+    const channel = await client.channels.cache.get(logChannelId);
+
+    // data of the slash command
     const server = interaction.guild.name;
     const user = interaction.user.username;
     const userID = interaction.user.id;
 
+    // message in the log
     const embed = new EmbedBuilder()
-        .setColor('Grey')
+        .setColor('Red')
         .setTitle('Slash Command was used!')
         .addFields({ name: 'Server Name', value: `${server}`})
         .addFields({ name: 'Chat Command', value: `${interaction}`})
