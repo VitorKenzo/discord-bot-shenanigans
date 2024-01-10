@@ -50,7 +50,7 @@ module.exports = {
                 // data of the slash command
                 const server = interaction.guild.name;
                 const user = interaction.user.username;
-                const userID = interaction.user.roles.highest.position;
+                const userID = interaction.user.id;
 
                 // message in the log
                 const embed = new EmbedBuilder()
