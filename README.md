@@ -19,7 +19,6 @@ discord-bot-shenanigans/
 │       ├── guide.js
 │       ├── info.js
 │       ├── ping.js
-│       ├── reload.js
 │       └── urban.js
 ├── events/
 │   ├── interactioCreate.js
@@ -39,8 +38,8 @@ discord-bot-shenanigans/
 ### Moderation Commands
 
 - `/ban[user, reason]`: This command will ban the target member from the server. The reason for the ban is needed. It is not possible to ban the owner of the server, or try to ban someone with a higher role than you inside the server. Only roles with **banMembers** permission can use this command
-- `/timeout[user, duration, reason]`: This command will timeout the target member for the especified duration. It converts times such as 10 seconds, 30 minutes, 2 day with no problem. The reason is not needed. It is not possible to timeout someone with a higher role than you in the server or timeout a bot. Only roles with **muteMembers** permission can use this command
-- `/role[user, role, duration]`: This command will make the target member the role specified for the amount of time in duration. Only roles with the **Administrator** permission can use this command
+- `/timeout[user, duration, reason]`: This command will timeout the target member for the especified duration. It converts times such as 10 seconds, 30 minutes, 2 day with no problem. The reason is optional here. It is not possible to timeout someone with a higher role than you in the server or timeout a bot. Only roles with **muteMembers** permission can use this command
+- `/role[user, role, duration]`: This command will make the target member the role specified for the amount of time in duration. Only roles with the **Administrator** permission can use this command. The role will automatically be taken out after the time has passed, as long as the bot is still active. In case the bot stops working in the mean time, it will not be able to take out the role and will be necessary to remove it manually.
   
 
 ### Utility Commands
@@ -49,7 +48,6 @@ discord-bot-shenanigans/
 - `/guide [autocomplete]`: Command that would give different autocomplete options for a guide.(This command does not do anything, was just a autocomplete test)
 - `/info [user|server]`: The command has 2 subcommands, one to give info about a user and another to give information about the server.
 - `/ping`: Answers with pong and the actual ping of the response
-- `/reload [user]`: Command used to reload a certain command
 - `/urban [term]`: Will search the term in the urban dictionary and return the first definition available.
 
 ## Information necessary
@@ -65,4 +63,4 @@ This information is private and individual so if you want to try to run this pro
 
 ## Logging System
 
-This bot is able to log all commands used by it in the channel specified by the logChannelId, which is a text channel of the discord server. The purpouse is to keep track of all commands used and how used those commands as well.
+This bot is able to log all commands used by it in the channel specified by the logChannelId, which is a text channel of the discord server. The purpouse is to keep track of all commands used and who used those commands as well.
