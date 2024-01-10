@@ -1,8 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 // requiring the necessary discord.js classes
-const {Client, Events, GatewayIntentBits, Collection, EmbedBuilder} = require('discord.js');
-const { token, logChannelId } = require('./config.json');
+const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const { token } = require('./config.json');
 
 // create new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
