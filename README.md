@@ -1,12 +1,13 @@
 # [Choo Choo bot]
 
 This discord bot is a small project where I explored the tech available to create 
-one as well as getting an understanding of how to organize a project like this one.
+one as well as getting an understanding of how to organize a project like this. We are using primarily **Javascript** as the programming language, **Node.js** to run it and **npm** to manage the packages.
 
 ## Folder organization
 
-The project is organized as below. All commands available are in the commands folder, separated by moderation and utility. The events folder holds all possible events that can happen and node_modules have all the dependencies necessary to run the bot.
+The project is organized as below. All commands available are in the commands folder, separated by moderation and utility. The events folder holds all possible events that can happen that we want to check and node_modules have all the dependencies necessary to run the bot, which includes discord.js, ms, pretty-ms, undici and other dependencies.
 
+```
 discord-bot-shenanigans/
 ├── commands/
 │   ├── moderation/
@@ -24,13 +25,14 @@ discord-bot-shenanigans/
 │   ├── interactioCreate.js
 │   └── ready.js
 ├── node_modules/
-│   └── **...**
+│   └── ...
 ├── .gitignore
 ├── deploy-commands.js
 ├── index.js
 ├── package-lock.json
 ├── package.json
 └── README.md
+```
 
 ## Available commands
 
@@ -59,8 +61,8 @@ Some files will require a **config.json** file that has informations necessary t
 - GuildId
 - logChannelId
 
-
+This information is private and individual so if you want to try to run this project yourself, you should setup a project in [discord developers](https://discord.com/developers/docs/intro) and [discord](https://discord.com/) server to do so.
 
 ## Logging System
 
-This bot is able to log all commands used by it in the specified logChannelId, which is a text channel of the discord server.
+This bot is able to log all commands used by it in the channel specified by the logChannelId, which is a text channel of the discord server. The purpouse is to keep track of all commands used and how used those commands as well.
