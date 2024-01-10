@@ -5,7 +5,7 @@ one as well as getting an understanding of how to organize a project like this. 
 
 ## Folder organization
 
-The project is organized as below. All commands available are in the commands folder, separated by moderation and utility. The events folder holds all possible events that can happen that we want to check and node_modules have all the dependencies necessary to run the bot, which includes discord.js, ms, pretty-ms, undici and other dependencies. The **index.js** file is the one that will activate the bot in question. The **deploy-commands.js** is the one that will refresh the commands to be used in the discord and should be run after any command adition. In this project both are run by **node `file`**
+The project is organized as the scheme below shows. All commands available are in the commands folder, separated by moderation and utility. The events folder holds all possible events that can happen that we want to check. The **index.js** file is the one that will activate the bot in question. The **deploy-commands.js** is the one that will refresh the commands to be used in the discord and should be run after any command adition and before running the bot for the first time. Since we are using node, both are run by **node `file`**
 
 ```
 discord-bot-shenanigans/
@@ -48,7 +48,7 @@ discord-bot-shenanigans/
 - `/ping`: Answers with pong and the actual ping of the response
 - `/urban [term]`: Will search the term in the urban dictionary and return the first definition available.
 
-## Information necessary
+## Information Safety
 
 Some files will require a **config.json** file that has informations necessary to connect to the server:
 
@@ -57,8 +57,8 @@ Some files will require a **config.json** file that has informations necessary t
 - GuildId
 - logChannelId
 
-This information is private and individual so if you want to try to run this project yourself, you should setup a project in [discord developers](https://discord.com/developers/docs/intro) and [discord](https://discord.com/) server to do so.
+This information is private and unique so if you want to try to run this project yourself, you should setup a project in [discord developers](https://discord.com/developers/docs/intro) and [discord](https://discord.com/) server to do so.
 
 ## Logging System
 
-This bot is able to log all commands used by it in the channel specified by the logChannelId, which is a text channel of the discord server. The purpouse is to keep track of all commands used and who used those commands as well.
+This bot is able to log all commands used by it in the channel specified by the logChannelId, which is a text channel of the discord server. The purpouse is to keep track of all commands used, who used those commands and when they where used as well.
