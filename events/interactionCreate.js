@@ -14,6 +14,7 @@ module.exports = {
                 return;
             }
         
+            //COOLDOWN SLASH COMMAND SYSTEM
             const { cooldowns } = interaction.client;
 
             if (!cooldowns.has(command.data.name)) {
@@ -37,6 +38,7 @@ module.exports = {
             timestamps.set(interaction.user.id, now);
             setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
+            // COMMAND EXECUTION PORTION
             try { 
                 // execution of the command
                 await command.execute(interaction);
@@ -70,7 +72,8 @@ module.exports = {
                     await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
                 }
             }
-
+        
+        // AUTOCOMPLETE INTERACTION CASE
         } else if (interaction.isAutocomplete()) {
             const command = interaction.client.commands.get(interaction.commandName);
 
@@ -85,7 +88,5 @@ module.exports = {
                 console.error(err);
             }
         }
-    
-        
     },
 }
