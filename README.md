@@ -1,11 +1,11 @@
 # [Choo Choo bot]
 
 This discord bot is a small project where I explored the tech available to create 
-one as well as getting an understanding of how to organize a project like this. We are using primarily **Javascript** as the programming language, **Node.js** to run it and **npm** to manage the packages.
+one as well as getting an understanding of how to organize a project like this. We are using primarily **Javascript** as the programming language, **Node.js** to run it and **npm** to manage the packages, so before running it use **npm install**.
 
 ## Folder organization
 
-The project is organized as below. All commands available are in the commands folder, separated by moderation and utility. The events folder holds all possible events that can happen that we want to check and node_modules have all the dependencies necessary to run the bot, which includes discord.js, ms, pretty-ms, undici and other dependencies.
+The project is organized as below. All commands available are in the commands folder, separated by moderation and utility. The events folder holds all possible events that can happen that we want to check and node_modules have all the dependencies necessary to run the bot, which includes discord.js, ms, pretty-ms, undici and other dependencies. The **index.js** file is the one that will activate the bot in question. The **deploy-commands.js** is the one that will refresh the commands to be used in the discord and should be run after any command adition. In this project both are run by **node `file`**
 
 ```
 discord-bot-shenanigans/
@@ -23,8 +23,6 @@ discord-bot-shenanigans/
 ├── events/
 │   ├── interactioCreate.js
 │   └── ready.js
-├── node_modules/
-│   └── ...
 ├── .gitignore
 ├── deploy-commands.js
 ├── index.js
